@@ -2,7 +2,7 @@ import argparse
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
-from PIL import Image
+from PIL import Image, ImageOps
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -19,6 +19,12 @@ model = load_model("handwritten_digits.model")
 def predict(image_path):
     # Open the image file
     img = Image.open(image_path).convert("L")
+
+    # Convert image to black and white
+    img = img.convert("1")
+
+    # Invert image colors
+    img = ImageOps.invert(img)
 
     # Resize the image to 28x28 pixels
     img = img.resize((28, 28))
